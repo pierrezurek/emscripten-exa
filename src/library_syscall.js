@@ -160,6 +160,7 @@ var SyscallsLibrary = {
 #endif
   },
 
+  __syscall_chdir__deps: ['$EXA'],
   __syscall_chdir__sig: 'ip',
     __syscall_chdir: function(path) {
 
@@ -171,7 +172,7 @@ var SyscallsLibrary = {
 	
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 35; // CHDIR
+	    buf2[0] = EXA.MSGID.CHDIR; // CHDIR
 
 	    /*//padding
 	      buf[1] = 0;
@@ -208,7 +209,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (35|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.CHDIR|0x80)) {
 
 		    let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -254,6 +255,7 @@ var SyscallsLibrary = {
     FS.rename(old_path, new_path);
     return 0;
   },
+  __syscall_rmdir__deps: ['$EXA'],
   __syscall_rmdir__sig: 'ip',
     __syscall_rmdir: function(path) {
 
@@ -265,7 +267,7 @@ var SyscallsLibrary = {
 	  
 	  let buf2 = new Uint8Array(buf_size);
 	  
-	  buf2[0] = 66; // RMDIR
+	  buf2[0] = EXA.MSGID.RMDIR; // RMDIR
 	  
 	  let pid = Module.getpid();
 	  
@@ -301,7 +303,7 @@ var SyscallsLibrary = {
 
 	      let msg2 = messageEvent.data;
 
-	      if (msg2.buf[0] == (66|0x80)) {
+	      if (msg2.buf[0] == (EXA.MSGID.RMDIR|0x80)) {
 
 		  let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -332,6 +334,7 @@ var SyscallsLibrary = {
     FS.rmdir(path);
     return 0;*/
   },
+  __syscall_dup__deps: ['$EXA'],
   __syscall_dup__sig: 'ii',
     __syscall_dup: function(fd) {
 	/* Modified by Benoit Baudaux 22/1/2023 */
@@ -346,7 +349,7 @@ var SyscallsLibrary = {
 		
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 19; // DUP
+		buf2[0] = EXA.MSGID.DUP; // DUP
 
 		let pid = Module.getpid();
 		
@@ -372,7 +375,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (19|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.DUP|0x80)) {
 
 			//console.log(messageEvent);
 
@@ -418,7 +421,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 26; // IS_OPEN
+		buf2[0] = EXA.MSGID.IS_OPEN; // IS_OPEN
 
 		let pid = Module.getpid();
 
@@ -438,7 +441,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (26|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.IS_OPEN|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -500,6 +503,7 @@ var SyscallsLibrary = {
 
 	return ret;
     },
+    __syscall_dup2__deps: ['$EXA'],
     __syscall_dup2__sig: 'iii',
     __syscall_dup2: function(fd, new_fd) {
 	/* Modified by Benoit Baudaux 22/1/2023 */
@@ -514,7 +518,7 @@ var SyscallsLibrary = {
 	
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 19; // DUP
+		buf2[0] = EXA.MSGID.DUP; // DUP
 
 		let pid = Module.getpid();
 
@@ -540,7 +544,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (19|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.DUP|0x80)) {
 
 			//console.log(messageEvent);
 
@@ -589,7 +593,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 26; // IS_OPEN
+		buf2[0] = EXA.MSGID.IS_OPEN; // IS_OPEN
 
 		let pid = Module.getpid();
 
@@ -609,7 +613,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (26|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.IS_OPEN|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -685,6 +689,7 @@ var SyscallsLibrary = {
 
     return 0;
     },*/
+    __syscall_pipe2__deps: ['$EXA'],
     __syscall_pipe2__sig: 'ipi',
     __syscall_pipe2: function(fdPtr, flags) {
 
@@ -694,7 +699,7 @@ var SyscallsLibrary = {
 	
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 47; // PIPE
+	    buf2[0] = EXA.MSGID.PIPE; // PIPE
 
 	    let pid = Module.getpid();
 
@@ -714,7 +719,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (47|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.PIPE|0x80)) {
 
 		    //console.log(messageEvent);
 
@@ -799,6 +804,7 @@ var SyscallsLibrary = {
 	return ret;
     },
     
+    __syscall_ioctl__deps: ['$EXA'],
     __syscall_ioctl__sig: 'iiip',
     __syscall_ioctl: function(fd, op, varargs) {
 	/*
@@ -908,7 +914,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 14; // IOCTL
+		buf2[0] = EXA.MSGID.IOCTL; // IOCTL
 
 		let pid = Module.getpid();
 
@@ -996,7 +1002,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (14|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.IOCTL|0x80)) {
 
 			let op2 = msg2.buf[16] | (msg2.buf[17] << 8) | (msg2.buf[18] << 16) |  (msg2.buf[19] << 24);
 
@@ -1264,7 +1270,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 26; // IS_OPEN
+		buf2[0] = EXA.MSGID.IS_OPEN; // IS_OPEN
 
 		let pid = Module.getpid();
 
@@ -1284,7 +1290,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (26|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.IS_OPEN|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 			
@@ -1392,7 +1398,7 @@ var SyscallsLibrary = {
     return info;
   },
     /* Modified by Benoit Baudaux 26/12/2022 */
-    __syscall_socket__deps: ['$SOCKFS'],
+    __syscall_socket__deps: ['$EXA', '$SOCKFS'],
     __syscall_socket: function(domain, type, protocol) {
 
 	//var sock = SOCKFS.createSocket(domain, type, protocol);
@@ -1411,7 +1417,7 @@ var SyscallsLibrary = {
 
 		let buf = new Uint8Array(256);
 
-		buf[0] = 9; // SOCKET
+		buf[0] = EXA.MSGID.SOCKET; // SOCKET
 		
 		/*//padding
 		  buf[1] = 0;
@@ -1460,7 +1466,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (9|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.SOCKET|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -1566,7 +1572,7 @@ var SyscallsLibrary = {
     },
     //TODO
     
-    __syscall_getsockname__deps: ['$getSocketFromFD', '$writeSockaddr'],
+    __syscall_getsockname__deps: ['$EXA', '$getSocketFromFD', '$writeSockaddr'],
     //, '$DNS'],
     __syscall_getsockname: function(fd, addr, addrlen) {
 
@@ -1594,7 +1600,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 56; // GETSOCKNAME
+		buf2[0] = EXA.MSGID.GETSOCKNAME; // GETSOCKNAME
 
 		let pid = Module.getpid();
 
@@ -1620,7 +1626,7 @@ var SyscallsLibrary = {
 		const hid = Module['rcv_bc_channel'].set_handler( (messageEvent) => {
 		  let msg2 = messageEvent.data;
 
-		  if (msg2.buf[0] == (56|0x80)) {
+		  if (msg2.buf[0] == (EXA.MSGID.GETSOCKNAME|0x80)) {
 
 		      let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -1660,7 +1666,7 @@ var SyscallsLibrary = {
 
 	return ret;
   },
-    __syscall_getpeername__deps: ['$getSocketFromFD', '$writeSockaddr'],
+    __syscall_getpeername__deps: ['$EXA', '$getSocketFromFD', '$writeSockaddr'],
     //, '$DNS'],
     __syscall_getpeername: function(fd, addr, addrlen) {
 
@@ -1689,7 +1695,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 57; // GETPEERNAME
+		buf2[0] = EXA.MSGID.GETPEERNAME; // GETPEERNAME
 
 		let pid = Module.getpid();
 
@@ -1715,7 +1721,7 @@ var SyscallsLibrary = {
 		const hid = Module['rcv_bc_channel'].set_handler( (messageEvent) => {
 		  let msg2 = messageEvent.data;
 
-		  if (msg2.buf[0] == (57|0x80)) {
+		  if (msg2.buf[0] == (EXA.MSGID.GETPEERNAME|0x80)) {
 
 		      let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -1755,7 +1761,7 @@ var SyscallsLibrary = {
 
 	return ret;
   },
-  __syscall_connect__deps: ['$getSocketFromFD', '$getSocketAddress'],
+  __syscall_connect__deps: ['$EXA', '$getSocketFromFD', '$getSocketAddress'],
   __syscall_connect__sig: 'iipi',
   __syscall_connect: function(fd, addr, addrlen) {
     /*var sock = getSocketFromFD(fd);
@@ -1775,7 +1781,7 @@ var SyscallsLibrary = {
 
 	      let buf2 = new Uint8Array(buf_size);
 
-	      buf2[0] = 55; // CONNECT
+	      buf2[0] = EXA.MSGID.CONNECT; // CONNECT
 
 	      let pid = Module.getpid();
 
@@ -1806,7 +1812,7 @@ var SyscallsLibrary = {
 	      const hid = Module['rcv_bc_channel'].set_handler( (messageEvent) => {
 		  let msg2 = messageEvent.data;
 
-		  if (msg2.buf[0] == (55|0x80)) {
+		  if (msg2.buf[0] == (EXA.MSGID.CONNECT|0x80)) {
 
 		      let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -1852,7 +1858,7 @@ var SyscallsLibrary = {
     }
     return newsock.stream.fd;
   },
-  __syscall_bind__deps: ['$getSocketFromFD', '$getSocketAddress'],
+  __syscall_bind__deps: ['$EXA', '$getSocketFromFD', '$getSocketAddress'],
   __syscall_bind__sig: 'iipi',
     __syscall_bind: function(fd, addr, addrlen) {
 
@@ -1876,7 +1882,7 @@ var SyscallsLibrary = {
 		
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 10; // BIND
+		buf2[0] = EXA.MSGID.BIND; // BIND
 
 		let pid = Module.getpid();
 
@@ -1901,7 +1907,7 @@ var SyscallsLibrary = {
 		const hid = Module['rcv_bc_channel'].set_handler( (messageEvent) => {
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (10|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.BIND|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -1934,7 +1940,7 @@ var SyscallsLibrary = {
     sock.sock_ops.listen(sock, backlog);
     return 0;
   },
-    __syscall_recvfrom__deps: ['$getSocketFromFD', '$writeSockaddr'],
+    __syscall_recvfrom__deps: ['$EXA', '$getSocketFromFD', '$writeSockaddr'],
 //, '$DNS'],
     __syscall_recvfrom: function(fd, buf, len, flags, addr, addrlen) {
 	/* Modified by Benoit Baudaux 26/12/2022 */
@@ -1967,7 +1973,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 54; // RECVFROM
+		buf2[0] = EXA.MSGID.RECVFROM; // RECVFROM
 
 		let pid = Module.getpid();
 		
@@ -2006,7 +2012,7 @@ var SyscallsLibrary = {
 		const hid = Module['rcv_bc_channel'].set_handler( (messageEvent) => {
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (54|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.RECVFROM|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -2049,7 +2055,7 @@ var SyscallsLibrary = {
 	
 	return ret;
   },
-  __syscall_sendto__deps: ['$getSocketFromFD', '$getSocketAddress'],
+  __syscall_sendto__deps: ['$EXA', '$getSocketFromFD', '$getSocketAddress'],
   __syscall_sendto__sig: 'iipiipi',
     __syscall_sendto: function(fd, message, length, flags, addr, addr_len) {
 
@@ -2078,7 +2084,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 52; // SENDTO
+		buf2[0] = EXA.MSGID.SENDTO; // SENDTO
 
 		let pid = Module.getpid();
 
@@ -2125,7 +2131,7 @@ var SyscallsLibrary = {
 		const hid = Module['rcv_bc_channel'].set_handler( (messageEvent) => {
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (52|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.SENDTO|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -2358,6 +2364,7 @@ var SyscallsLibrary = {
     var stream = SYSCALLS.getStreamFromFD(fd);
     return 0; // we can't do anything synchronously; the in-memory FS is already synced to
   },
+  __syscall_poll__deps: ['$EXA'],
   __syscall_poll__sig: 'ipii',
   __syscall_poll: function(fds, nfds, timeout) {
     /*var nonzero = 0;
@@ -2409,7 +2416,7 @@ var SyscallsLibrary = {
 	      
 	      let buf2 = new Uint8Array(buf_size);
 
-	      buf2[0] = 31; // SELECT
+	      buf2[0] = EXA.MSGID.SELECT; // SELECT
 
 	      let pid = Module.getpid();
 
@@ -2558,7 +2565,7 @@ var SyscallsLibrary = {
 
 		  let buf2 = new Uint8Array(buf_size);
 
-		  buf2[0] = 26; // IS_OPEN
+		  buf2[0] = EXA.MSGID.IS_OPEN; // IS_OPEN
 
 		  let pid = Module.getpid();
 
@@ -2578,7 +2585,7 @@ var SyscallsLibrary = {
 
 		      let msg2 = messageEvent.data;
 
-		      if (msg2.buf[0] == (26|0x80)) {
+		      if (msg2.buf[0] == (EXA.MSGID.IS_OPEN|0x80)) {
 
 			  let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -2639,7 +2646,7 @@ var SyscallsLibrary = {
 
 		  let msg2 = messageEvent.data;
 		  
-		  if (msg2.buf[0] == (31|0x80)) {
+		  if (msg2.buf[0] == (EXA.MSGID.SELECT|0x80)) {
 
 		      let fd = msg2.buf[12] | (msg2.buf[13] << 8) | (msg2.buf[14] << 16) |  (msg2.buf[15] << 24);
 
@@ -2649,7 +2656,7 @@ var SyscallsLibrary = {
 
 		      return hid;
 		  }
-		  else if (msg2.buf[0] == 62) { // END_OF_SIGNAL Signal received and handled
+		  else if (msg2.buf[0] == EXA.MSGID.END_OF_SIGNAL) { // END_OF_SIGNAL Signal received and handled
 		      
 		      //console.log("Signal has interrupted poll  syscall");
 		      
@@ -2710,6 +2717,7 @@ var SyscallsLibrary = {
       return ret;
   },
 	        
+  __syscall_getcwd__deps: ['$EXA'],
   __syscall_getcwd__sig: 'ipp',
     __syscall_getcwd: function(buf, size) {
 
@@ -2721,7 +2729,7 @@ var SyscallsLibrary = {
 	
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 34; // GETCWD
+	    buf2[0] = EXA.MSGID.GETCWD; // GETCWD
 
 	    /*//padding
 	      buf[1] = 0;
@@ -2742,7 +2750,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (34|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.GETCWD|0x80)) {
 
 		    let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -2807,6 +2815,7 @@ var SyscallsLibrary = {
   },
   __syscall_truncate64__sig: 'ipi',
   //__syscall_truncate64__deps: i53ConversionDeps,
+    __syscall_truncate64__deps: ['$EXA'],
     __syscall_truncate64: function(path, length) {
 
 	let ret = Asyncify.handleSleep(function (wakeUp) {
@@ -2815,7 +2824,7 @@ var SyscallsLibrary = {
 	    
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 63; // TRUNCATE
+	    buf2[0] = EXA.MSGID.TRUNCATE; // TRUNCATE
 	    
 	    /*//padding
 	      buf[1] = 0;
@@ -2863,7 +2872,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (63|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.TRUNCATE|0x80)) {
 
 		    let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 		    
@@ -2898,6 +2907,7 @@ var SyscallsLibrary = {
   },
   __syscall_ftruncate64__sig: 'iii',
   //__syscall_ftruncate64__deps: i53ConversionDeps,
+    __syscall_ftruncate64__deps: ['$EXA'],
     __syscall_ftruncate64: function(fd, length) {
 
 	let ret = Asyncify.handleSleep(function (wakeUp) {
@@ -2923,7 +2933,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 64; // FTRUNCATE
+		buf2[0] = EXA.MSGID.FTRUNCATE; // FTRUNCATE
 
 		let pid = Module.getpid();
 
@@ -2951,7 +2961,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (64|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.FTRUNCATE|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -2988,7 +2998,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 26; // IS_OPEN
+		buf2[0] = EXA.MSGID.IS_OPEN; // IS_OPEN
 
 		let pid = Module.getpid();
 
@@ -3008,7 +3018,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (26|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.IS_OPEN|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -3073,6 +3083,7 @@ var SyscallsLibrary = {
 	return 0;
 #endif
   },
+  __syscall_stat64__deps: ['$EXA'],
   __syscall_stat64__sig: 'ipp',
     __syscall_stat64: function(path, buf) {
 
@@ -3084,7 +3095,7 @@ var SyscallsLibrary = {
 	
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 28; // STAT
+	    buf2[0] = EXA.MSGID.STAT; // STAT
 	    
 	    /*//padding
 	      buf[1] = 0;
@@ -3127,7 +3138,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (28|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.STAT|0x80)) {
 
 		    let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 		    
@@ -3171,6 +3182,7 @@ var SyscallsLibrary = {
     /*path = SYSCALLS.getStr(path);
     return SYSCALLS.doStat(FS.stat, path, buf);*/
   },
+  __syscall_lstat64__deps: ['$EXA'],
   __syscall_lstat64__sig: 'ipp',
     __syscall_lstat64: function(path, buf) {
 
@@ -3182,7 +3194,7 @@ var SyscallsLibrary = {
 	
 	    let buf2 = new Uint8Array(buf_size);
 	    
-	    buf2[0] = 30; // LSTAT
+	    buf2[0] = EXA.MSGID.LSTAT; // LSTAT
 
 	    /*//padding
 	      buf[1] = 0;
@@ -3225,7 +3237,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (30|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.LSTAT|0x80)) {
 
 		    let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -3271,6 +3283,7 @@ var SyscallsLibrary = {
     /*path = SYSCALLS.getStr(path);
     return SYSCALLS.doStat(FS.lstat, path, buf);*/
   },
+    __syscall_fstat64__deps: ['$EXA'],
     __syscall_fstat64__sig: 'iip',
     __syscall_fstat64: function(fd, buf) {
 
@@ -3284,7 +3297,7 @@ var SyscallsLibrary = {
 		
 		let buf2 = new Uint8Array(buf_size);
 		
-		buf2[0] = 29; // FSTAT
+		buf2[0] = EXA.MSGID.FSTAT; // FSTAT
 		
 		let pid = Module.getpid();
 		
@@ -3306,7 +3319,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (29|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.FSTAT|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 			
@@ -3354,7 +3367,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 26; // IS_OPEN
+		buf2[0] = EXA.MSGID.IS_OPEN; // IS_OPEN
 
 		let pid = Module.getpid();
 
@@ -3374,7 +3387,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (26|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.IS_OPEN|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -3442,6 +3455,7 @@ var SyscallsLibrary = {
     FS.fchown(fd, owner, group);
     return 0;
   },
+  __syscall_getdents64__deps: ['$EXA'],
   __syscall_getdents64__sig: 'iipi',
     __syscall_getdents64: function(fd, dirp, count) {
 
@@ -3451,7 +3465,7 @@ var SyscallsLibrary = {
 	
 	    let buf2 = new Uint8Array(buf_size);
 	    
-	    buf2[0] = 36; // GETDENTS
+	    buf2[0] = EXA.MSGID.GETDENTS; // GETDENTS
 
 	    /*//padding
 	      buf[1] = 0;
@@ -3494,7 +3508,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (36|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.GETDENTS|0x80)) {
 
 		    let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -3583,6 +3597,7 @@ var SyscallsLibrary = {
     return pos;*/
   },
   //__syscall_fcntl64__deps: ['$setErrNo'],
+  __syscall_fcntl64__deps: ['$EXA'],
   __syscall_fcntl64__sig: 'iiip',
   __syscall_fcntl64: function(fd, cmd, varargs) {
 #if SYSCALLS_REQUIRE_FILESYSTEM == 0
@@ -3602,7 +3617,7 @@ var SyscallsLibrary = {
 
 	  let buf2 = new Uint8Array(buf_size);
 
-	  buf2[0] = 17; // FCNTL
+	  buf2[0] = EXA.MSGID.FCNTL; // FCNTL
 
 	  let pid = Module.getpid();
 
@@ -3656,7 +3671,7 @@ var SyscallsLibrary = {
 
 	      let msg2 = messageEvent.data;
 
-	      if (msg2.buf[0] == (17|0x80)) {
+	      if (msg2.buf[0] == (EXA.MSGID.FCNTL|0x80)) {
 
 		  //console.log("<-- __syscall_fcntl64");
 
@@ -3786,6 +3801,7 @@ var SyscallsLibrary = {
   __syscall_fadvise64: function(fd, offset, len, advice) {
     return 0; // your advice is important to us (but we can't use it)
   },
+    __syscall_openat__deps: ['$EXA'],
     __syscall_openat__sig: 'iipip',
     __syscall_openat: function(dirfd, path, flags, varargs) {
 	
@@ -3855,7 +3871,7 @@ var SyscallsLibrary = {
 	
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 11; // OPEN
+		buf2[0] = EXA.MSGID.OPEN; // OPEN
 
 		/*//padding
 		  buf[1] = 0;
@@ -3917,7 +3933,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (11|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.OPEN|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -3961,7 +3977,7 @@ var SyscallsLibrary = {
 				    
 				    let m = {
 	    
-					type: 5,   // show iframe
+					type: EXA.MSGTYPE.SHOW_IFRAME,   // show iframe
 					pid: pid & 0x0000ffff
 				    };
 
@@ -4167,6 +4183,7 @@ var SyscallsLibrary = {
     var mode = varargs ? SYSCALLS.get() : 0;
     return FS.open(path, flags, mode).fd;*/
     },
+  __syscall_mkdirat__deps: ['$EXA'],
   __syscall_mkdirat__sig: 'iipi',
   __syscall_mkdirat: function(dirfd, path, mode) {
 
@@ -4178,7 +4195,7 @@ var SyscallsLibrary = {
 	  
 	  let buf2 = new Uint8Array(buf_size);
 	  
-	  buf2[0] = 65; // MKDIRAT
+	  buf2[0] = EXA.MSGID.MKDIRAT; // MKDIRAT
 	  
 	  let pid = Module.getpid();
 	  
@@ -4224,7 +4241,7 @@ var SyscallsLibrary = {
 
 	      let msg2 = messageEvent.data;
 
-	      if (msg2.buf[0] == (65|0x80)) {
+	      if (msg2.buf[0] == (EXA.MSGID.MKDIRAT|0x80)) {
 
 		  let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -4301,6 +4318,7 @@ var SyscallsLibrary = {
     (nofollow ? FS.lchown : FS.chown)(path, owner, group);
     return 0;
   },
+  __syscall_newfstatat__deps: ['$EXA'],
   __syscall_newfstatat__sig: 'iippi',
     __syscall_newfstatat: function(dirfd, path, buf, flags) {
 
@@ -4312,7 +4330,7 @@ var SyscallsLibrary = {
 	  
 	  let buf2 = new Uint8Array(buf_size);
 	  
-	  buf2[0] = 67; // FSTATAT
+	  buf2[0] = EXA.MSGID.FSTATAT; // FSTATAT
 	  
 	  let pid = Module.getpid();
 	  
@@ -4358,7 +4376,7 @@ var SyscallsLibrary = {
 
 	      let msg2 = messageEvent.data;
 
-	      if (msg2.buf[0] == (67|0x80)) {
+	      if (msg2.buf[0] == (EXA.MSGID.FSTATAT|0x80)) {
 
 		  let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -4403,6 +4421,7 @@ var SyscallsLibrary = {
     path = SYSCALLS.calculateAt(dirfd, path, allowEmpty);
     return SYSCALLS.doStat(nofollow ? FS.lstat : FS.stat, path, buf);*/
   },
+  __syscall_unlinkat__deps: ['$EXA'],
   __syscall_unlinkat__sig: 'iipi',
   __syscall_unlinkat: function(dirfd, path, flags) {
     /*path = SYSCALLS.getStr(path);
@@ -4422,7 +4441,7 @@ var SyscallsLibrary = {
 	  
 	  let buf2 = new Uint8Array(buf_size);
 	  
-	  buf2[0] = 50; // UNLINKAT
+	  buf2[0] = EXA.MSGID.UNLINKAT; // UNLINKAT
 	  
 	  let pid = Module.getpid();
 	  
@@ -4470,7 +4489,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (50|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.UNLINKAT|0x80)) {
 
 		    let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -4499,6 +4518,7 @@ var SyscallsLibrary = {
 
 	return ret;
   },
+  __syscall_renameat__deps: ['$EXA'],
   __syscall_renameat__sig: 'iipip',
   __syscall_renameat: function(olddirfd, oldpath, newdirfd, newpath) {
 	
@@ -4515,7 +4535,7 @@ var SyscallsLibrary = {
 	  
 	  let buf2 = new Uint8Array(buf_size);
 	  
-	  buf2[0] = 51; // RENAMEAT
+	  buf2[0] = EXA.MSGID.RENAMEAT; // RENAMEAT
 	  
 	  let pid = Module.getpid();
 	  
@@ -4577,7 +4597,7 @@ var SyscallsLibrary = {
 
 	      let msg2 = messageEvent.data;
 
-	      if (msg2.buf[0] == (51|0x80)) {
+	      if (msg2.buf[0] == (EXA.MSGID.RENAMEAT|0x80)) {
 
 		  let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -4628,6 +4648,7 @@ var SyscallsLibrary = {
     FS.chmod(path, mode);
     return 0;
   },
+  __syscall_faccessat__deps: ['$EXA'],
   __syscall_faccessat__sig: 'iipii',
   __syscall_faccessat: function(dirfd, path, amode, flags) {
 #if SYSCALL_DEBUG
@@ -4640,7 +4661,7 @@ var SyscallsLibrary = {
 	  
 	  let buf2 = new Uint8Array(buf_size);
 	  
-	  buf2[0] = 46; // FACCESSAT
+	  buf2[0] = EXA.MSGID.FACCESSAT; // FACCESSAT
 	  
 	  let pid = Module.getpid();
 	  
@@ -4693,7 +4714,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (46|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.FACCESSAT|0x80)) {
 
 		    let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -4793,6 +4814,7 @@ var SyscallsLibrary = {
     return FS.createStream(old, suggestFD, suggestFD + 1).fd;
   },
     // Modified by Benoit Baudaux 20/11/2020
+    __syscall_fork__deps: ['$EXA'],
     __syscall_fork: function() {
 
 	let ret = Asyncify.handleSleep(function (wakeUp) {
@@ -4840,7 +4862,7 @@ var SyscallsLibrary = {
 
 		    let msg = {
 
-			type: 3,   // fork
+			type: EXA.MSGTYPE.FORK,   // fork
 			pid: Module.child_pid
 		    };
 
@@ -4871,7 +4893,7 @@ var SyscallsLibrary = {
 
 		let buf = new Uint8Array(256);
 
-		buf[0] = 7; // FORK
+		buf[0] = EXA.MSGID.FORK; // FORK
 
 		/*//padding
 		  buf[1] = 0;
@@ -4902,7 +4924,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (7|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.FORK|0x80)) {
 
 			Module.child_pid = msg2.buf[12] | (msg2.buf[13] << 8) | (msg2.buf[14] << 16) |  (msg2.buf[15] << 24);
 
@@ -4928,6 +4950,7 @@ var SyscallsLibrary = {
 	return ret;
     },
     // Modified by Benoit Baudaux 22/12/2020
+    __syscall_execve__deps: ['$EXA'],
     __syscall_execve__sig: 'ippp',
     __syscall_execve: function(pathname, argv, envp) {
 
@@ -4945,7 +4968,7 @@ var SyscallsLibrary = {
 
 		let buf = new Uint8Array(buf_size);
 
-		buf[0] = 8; // EXECVE
+		buf[0] = EXA.MSGID.EXECVE; // EXECVE
 
 		let pid = Module.getpid();
 
@@ -5077,7 +5100,7 @@ var SyscallsLibrary = {
 	
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 34; // GETCWD
+	    buf2[0] = EXA.MSGID.GETCWD; // GETCWD
 	    
 	    /*//padding
 	      buf[1] = 0;
@@ -5098,7 +5121,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (34|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.GETCWD|0x80)) {
 
 		    let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -5147,6 +5170,7 @@ var SyscallsLibrary = {
     },
 
     /* Modified by Benoit Baudaux 5/1/2023 */
+    __syscall_write__deps: ['$EXA'],
     __syscall_write__sig: 'iipi',
     __syscall_write: function(fd, buf, count) {
 	
@@ -5160,7 +5184,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 13; // WRITE
+		buf2[0] = EXA.MSGID.WRITE; // WRITE
 
 		let pid = Module.getpid();
 		
@@ -5191,7 +5215,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (13|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.WRITE|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -5235,7 +5259,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 26; // IS_OPEN
+		buf2[0] = EXA.MSGID.IS_OPEN; // IS_OPEN
 
 		let pid = Module.getpid();
 
@@ -5255,7 +5279,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (26|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.IS_OPEN|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -5316,6 +5340,7 @@ var SyscallsLibrary = {
     return ret;
     },
     /* Modified by Benoit Baudaux 8/1/2023 */
+    __syscall_writev__deps: ['$EXA'],
     __syscall_writev__sig: 'iipp',
     __syscall_writev: function(fd, iov, iovcnt) {
 
@@ -5339,7 +5364,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 13; // WRITE
+		buf2[0] = EXA.MSGID.WRITE; // WRITE
 		
 		let pid = Module.getpid();
 
@@ -5391,7 +5416,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (13|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.WRITE|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -5435,7 +5460,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 26; // IS_OPEN
+		buf2[0] = EXA.MSGID.IS_OPEN; // IS_OPEN
 
 		let pid = Module.getpid();
 
@@ -5455,7 +5480,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (26|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.IS_OPEN|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -5523,6 +5548,7 @@ var SyscallsLibrary = {
     },
     /* Modified by Benoit Baudaux 11/1/2023 */
     __syscall_close__sig: 'ii',
+    __syscall_close__deps: ['$EXA'],
     __syscall_close: function(fd) {
 
 	let ret = Asyncify.handleSleep(function (wakeUp) {
@@ -5533,7 +5559,7 @@ var SyscallsLibrary = {
 		
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 15; // CLOSE
+		buf2[0] = EXA.MSGID.CLOSE; // CLOSE
 
 		let pid = Module.getpid();
 
@@ -5553,7 +5579,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (15|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.CLOSE|0x80)) {
 
 			//console.log(messageEvent);
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
@@ -5564,7 +5590,7 @@ var SyscallsLibrary = {
 				    
 				let m = {
 				    
-				    type: 6,   // hide iframe
+				    type: EXA.MSGTYPE.HIDE_IFRAME,   // hide iframe
 				    pid: pid
 				};
 
@@ -5618,7 +5644,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 26; // IS_OPEN
+		buf2[0] = EXA.MSGID.IS_OPEN; // IS_OPEN
 
 		let pid = Module.getpid();
 
@@ -5638,7 +5664,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (26|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.IS_OPEN|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -5699,6 +5725,7 @@ var SyscallsLibrary = {
 	return ret;
     },
     /* Modified by Benoit Baudaux 13/1/2023 */
+    __syscall_setsid__deps: ['$EXA'],
     __syscall_setsid__sig: 'i',
     __syscall_setsid: function() {
 
@@ -5708,7 +5735,7 @@ var SyscallsLibrary = {
 	
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 16; // SETSID
+	    buf2[0] = EXA.MSGID.SETSID; // SETSID
 
 	    let pid = Module.getpid();
 
@@ -5728,7 +5755,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (16|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.SETSID|0x80)) {
 
 		    //console.log(messageEvent);
 
@@ -5769,6 +5796,7 @@ var SyscallsLibrary = {
 	return ret;
     },
     /* Modified by Benoit Baudaux 22/1/2023 */
+    __syscall_getsid__deps: ['$EXA'],
     __syscall_getsid__sig: 'i',
     __syscall_getsid: function(req_pid) {
 
@@ -5778,7 +5806,7 @@ var SyscallsLibrary = {
 	
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 18; // GETSID
+	    buf2[0] = EXA.MSGID.GETSID; // GETSID
 
 	    let pid = Module.getpid();
 
@@ -5804,7 +5832,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (18|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.GETSID|0x80)) {
 
 		    //console.log(messageEvent);
 		    
@@ -5834,6 +5862,7 @@ var SyscallsLibrary = {
 	return ret;
     },
     /* Modified by Benoit Baudaux 14/1/2023 */
+    __syscall_read__deps: ['$EXA'],
     __syscall_read__sig: 'iipi',
     __syscall_read: function(fd, buf, count) {
 
@@ -5873,7 +5902,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 12; // READ
+		buf2[0] = EXA.MSGID.READ; // READ
 
 		let pid = Module.getpid();
 
@@ -5900,7 +5929,7 @@ var SyscallsLibrary = {
 		const hid = Module['rcv_bc_channel'].set_handler( (messageEvent) => {
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (12|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.READ|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -5922,7 +5951,7 @@ var SyscallsLibrary = {
 
 			return hid;
 		    }
-		    else if (msg2.buf[0] == 62) { // END_OF_SIGNAL Signal received and handled
+		    else if (msg2.buf[0] == EXA.MSGID.END_OF_SIGNAL) { // END_OF_SIGNAL Signal received and handled
 
 			//TODO: check flags
 			
@@ -5957,7 +5986,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 26; // IS_OPEN
+		buf2[0] = EXA.MSGID.IS_OPEN; // IS_OPEN
 
 		let pid = Module.getpid();
 
@@ -5977,7 +6006,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (26|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.IS_OPEN|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -6037,6 +6066,7 @@ var SyscallsLibrary = {
     
     return ret;
     },
+    __syscall_readv__deps: ['$EXA'],
     __syscall_readv__sig: 'iippp',
     __syscall_readv: function(fd, iov, iovcnt) {
 
@@ -6059,7 +6089,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 12; // READ
+		buf2[0] = EXA.MSGID.READ; // READ
 
 		let pid = Module.getpid();
 
@@ -6089,7 +6119,7 @@ var SyscallsLibrary = {
 
 		    //console.log("__syscall_readv handler "+msg2.buf[0]);
 
-		    if (msg2.buf[0] == (12|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.READ|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -6141,7 +6171,7 @@ var SyscallsLibrary = {
 
 			return hid;
 		    }
-		    else if (msg2.buf[0] == 62) { // END_OF_SIGNAL Signal received and handled
+		    else if (msg2.buf[0] == EXA.MSGID.END_OF_SIGNAL) { // END_OF_SIGNAL Signal received and handled
 
 			//TODO: check flags
 			
@@ -6176,7 +6206,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 26; // IS_OPEN
+		buf2[0] = EXA.MSGID.IS_OPEN; // IS_OPEN
 
 		let pid = Module.getpid();
 
@@ -6196,7 +6226,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (26|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.IS_OPEN|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -6267,6 +6297,7 @@ var SyscallsLibrary = {
 	
 	return ret;
     },
+    __syscall_getpgid__deps: ['$EXA'],
     __syscall_getpgid__sig: 'ii',
     __syscall_getpgid: function(req_pid) {
 
@@ -6276,7 +6307,7 @@ var SyscallsLibrary = {
 	
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 21; // GETPGID
+	    buf2[0] = EXA.MSGID.GETPGID; // GETPGID
 
 	    let pid = Module.getpid();
 
@@ -6302,7 +6333,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (21|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.GETPGID|0x80)) {
 
 		    //console.log(messageEvent);
 		    
@@ -6330,6 +6361,7 @@ var SyscallsLibrary = {
 				       
 	return ret;
     },
+    __syscall_setpgid__deps: ['$EXA'],
     __syscall_setpgid__sig: 'iii',
     __syscall_setpgid: function(req_pid, pgid) {
 
@@ -6339,7 +6371,7 @@ var SyscallsLibrary = {
 	
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 22; // SETPGID
+	    buf2[0] = EXA.MSGID.SETPGID; // SETPGID
 
 	    let pid = Module.getpid();
 
@@ -6365,7 +6397,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (22|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.SETPGID|0x80)) {
 
 		    //console.log(messageEvent);
 		    
@@ -6391,6 +6423,7 @@ var SyscallsLibrary = {
 				       
 	return ret;
     },
+    __syscall_getppid__deps: ['$EXA'],
     __syscall_getppid__sig: 'i',
     __syscall_getppid: function() {
 
@@ -6400,7 +6433,7 @@ var SyscallsLibrary = {
 	
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 20; // GETPPID
+	    buf2[0] = EXA.MSGID.GETPPID; // GETPPID
 
 	    let pid = Module.getpid();
 
@@ -6420,7 +6453,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (20|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.GETPPID|0x80)) {
 
 		    //console.log(messageEvent);
 		    
@@ -6448,6 +6481,7 @@ var SyscallsLibrary = {
 				       
 	return ret;
     },
+    __syscall_readlinkat__deps: ['$EXA'],
     __syscall_readlinkat__sig: 'iippi',
     __syscall_readlinkat: function(dirfd, path, buf, bufsize) {
 
@@ -6457,7 +6491,7 @@ var SyscallsLibrary = {
 	
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 27; // READLINK
+	    buf2[0] = EXA.MSGID.READLINK; // READLINK
 
 	    let pid = Module.getpid();
 
@@ -6492,7 +6526,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (27|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.READLINK|0x80)) {
 
 		    //console.log(messageEvent);
 		    
@@ -6526,6 +6560,7 @@ var SyscallsLibrary = {
 	return ret;
 	
 	},
+    __syscall_pselect6__deps: ['$EXA'],
     __syscall_pselect6__sig: 'iippppp',
     __syscall_pselect6: function(nfds, readfds, writefds, exceptfds, timeout, sigmaks) {
 	
@@ -6582,7 +6617,7 @@ var SyscallsLibrary = {
 	
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 31; // SELECT
+		buf2[0] = EXA.MSGID.SELECT; // SELECT
 
 		let pid = Module.getpid();
 
@@ -6759,7 +6794,7 @@ var SyscallsLibrary = {
 
 		    let buf2 = new Uint8Array(buf_size);
 
-		    buf2[0] = 26; // IS_OPEN
+		    buf2[0] = EXA.MSGID.IS_OPEN; // IS_OPEN
 
 		    let pid = Module.getpid();
 
@@ -6779,7 +6814,7 @@ var SyscallsLibrary = {
 
 			let msg2 = messageEvent.data;
 
-			if (msg2.buf[0] == (26|0x80)) {
+			if (msg2.buf[0] == (EXA.MSGID.IS_OPEN|0x80)) {
 
 			    let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -6840,7 +6875,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 		    
-		    if (msg2.buf[0] == (31|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.SELECT|0x80)) {
 
 			let fd = msg2.buf[12] | (msg2.buf[13] << 8) | (msg2.buf[14] << 16) |  (msg2.buf[15] << 24);
 
@@ -6852,7 +6887,7 @@ var SyscallsLibrary = {
 
 			return hid;
 		    }
-		    else if (msg2.buf[0] == 62) { // END_OF_SIGNAL Signal received and handled
+		    else if (msg2.buf[0] == EXA.MSGID.END_OF_SIGNAL) { // END_OF_SIGNAL Signal received and handled
 
 			//console.log("Signal has interrupted select syscall");
 			
@@ -6912,6 +6947,7 @@ var SyscallsLibrary = {
 
 	return ret;
     },
+    __syscall_timerfd_create__deps: ['$EXA'],
     __syscall_timerfd_create__sig: 'iii',
     __syscall_timerfd_create: function(clockid, flags) {
 
@@ -6977,7 +7013,7 @@ var SyscallsLibrary = {
 	    
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 33; // TIMERFD_CREATE
+	    buf2[0] = EXA.MSGID.TIMERFD_CREATE; // TIMERFD_CREATE
 
 	    // pid
 	    buf2[4] = pid & 0xff;
@@ -7001,7 +7037,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (33|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.TIMERFD_CREATE|0x80)) {
 
 		    let fd = msg2.buf[20] | (msg2.buf[21] << 8) | (msg2.buf[22] << 16) |  (msg2.buf[23] << 24);
 
@@ -7095,6 +7131,7 @@ var SyscallsLibrary = {
 
 	//console.log('__syscall_timerfd_gettime: fd='+fd);
     },
+    __syscall_wait4__deps: ['$EXA'],
     __syscall_wait4__sig: 'iipii',
     __syscall_wait4: function (wpid, wstatus, options, rusage) {
 
@@ -7106,7 +7143,7 @@ var SyscallsLibrary = {
 	    
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 37; // WAIT
+	    buf2[0] = EXA.MSGID.WAIT; // WAIT
 
 	    let pid = Module.getpid();
 
@@ -7132,7 +7169,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (37|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.WAIT|0x80)) {
 
 		    let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -7169,6 +7206,7 @@ var SyscallsLibrary = {
 
 	return ret;
     },
+    __syscall_exit_group__deps: ['$EXA'],
     __syscall_exit_group__sig: 'vi',
     __syscall_exit_group: function (status) {
 
@@ -7180,7 +7218,7 @@ var SyscallsLibrary = {
 	    
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 38; // EXIT
+	    buf2[0] = EXA.MSGID.EXIT; // EXIT
 
 	    let pid = Module.getpid();
 
@@ -7220,7 +7258,7 @@ var SyscallsLibrary = {
 	    
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 38; // EXIT
+	    buf2[0] = EXA.MSGID.EXIT; // EXIT
 
 	    let pid = Module.getpid();
 
@@ -7250,6 +7288,7 @@ var SyscallsLibrary = {
 	});
     },
 
+    __syscall_lseek__deps: ['$EXA'],
     __syscall_lseek__sig: 'iiii',
     __syscall_lseek: function (fd, offset, whence) {
 
@@ -7263,7 +7302,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 39; // SEEK
+		buf2[0] = EXA.MSGID.SEEK; // SEEK
 
 		let pid = Module.getpid();
 
@@ -7297,7 +7336,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (39|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.SEEK|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -7343,7 +7382,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 26; // IS_OPEN
+		buf2[0] = EXA.MSGID.IS_OPEN; // IS_OPEN
 
 		let pid = Module.getpid();
 
@@ -7363,7 +7402,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (26|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.IS_OPEN|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -7423,6 +7462,7 @@ var SyscallsLibrary = {
 
 	return ret;
     },
+    __syscall_rt_sigaction__deps: ['$EXA'],
     __syscall_rt_sigaction__sig: 'iippi',
     __syscall_rt_sigaction: function (signum, act, oldact, sigsetsize) {
 
@@ -7432,7 +7472,7 @@ var SyscallsLibrary = {
 
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 40; // SIGACTION
+	    buf2[0] = EXA.MSGID.SIGACTION; // SIGACTION
 
 	    let pid = Module.getpid();
 
@@ -7456,7 +7496,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (40|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.SIGACTION|0x80)) {
 
 		    let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -7495,6 +7535,7 @@ var SyscallsLibrary = {
 
 	return ret;
     },
+    __syscall_rt_sigprocmask__deps: ['$EXA'],
     __syscall_rt_sigprocmask__sig: 'iippi',
     __syscall_rt_sigprocmask: function (how, set, oldset, sigsetsize) {
 
@@ -7504,7 +7545,7 @@ var SyscallsLibrary = {
 
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 41; // SIGPROGMASK
+	    buf2[0] = EXA.MSGID.SIGPROGMASK; // SIGPROGMASK
 
 	    let pid = Module.getpid();
 
@@ -7533,7 +7574,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (41|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.SIGPROGMASK|0x80)) {
 
 		    let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -7572,6 +7613,7 @@ var SyscallsLibrary = {
 
 	return ret;
     },
+    __syscall_kill__deps: ['$EXA'],
     __syscall_kill__sig: 'iii',
     __syscall_kill: function (pid, sig) {
 
@@ -7581,7 +7623,7 @@ var SyscallsLibrary = {
 
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 42; // KILL
+	    buf2[0] = EXA.MSGID.KILL; // KILL
 
 	    let my_pid = Module.getpid();
 
@@ -7605,7 +7647,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (42|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.KILL|0x80)) {
 
 		    let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -7638,6 +7680,7 @@ var SyscallsLibrary = {
 
     },
 
+    __syscall_setitimer__deps: ['$EXA'],
     __syscall_setitimer__sig: 'iipp',
     __syscall_setitimer: function (which, new_value, old_value) {
 
@@ -7647,7 +7690,7 @@ var SyscallsLibrary = {
 
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 43; // SETITIMER
+	    buf2[0] = EXA.MSGID.SETITIMER; // SETITIMER
 
 	    let pid = Module.getpid();
 
@@ -7670,7 +7713,7 @@ var SyscallsLibrary = {
 
 		//console.log("__syscall_setitimer "+msg2.buf[0]);
 
-		if (msg2.buf[0] == (43|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.SETITIMER|0x80)) {
 
 		    if (old_value)
 			Module.HEAPU8.set(msg2.buf.slice(16, 16+16), old_value);
@@ -7706,6 +7749,7 @@ var SyscallsLibrary = {
 	//TODO
     },
 
+    __syscall_exa_release_signal__deps: ['$EXA'],
     __syscall_exa_release_signal__sig: 'ii',
     __syscall_exa_release_signal: function(signum) {
 
@@ -7715,7 +7759,7 @@ var SyscallsLibrary = {
 	
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 45; // EXA_RELEASE_SIGNAL
+	    buf2[0] = EXA.MSGID.EXA_RELEASE_SIGNAL; // EXA_RELEASE_SIGNAL
 
 	    let pid = Module.getpid();
 
@@ -7735,7 +7779,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (45|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.EXA_RELEASE_SIGNAL|0x80)) {
 
 		    //console.log(messageEvent);
 		    
@@ -7764,6 +7808,7 @@ var SyscallsLibrary = {
 	return ret;
     },
 
+    __syscall_exa_endofsignal__deps: ['$EXA'],
     __syscall_exa_endofsignal__sig: 'ii',
     __syscall_exa_endofsignal: function(sig) {
 
@@ -7779,7 +7824,7 @@ var SyscallsLibrary = {
 
 	    msg.buf = new Uint8Array(20);
 
-	    msg.buf[0] = 62; // END_OF_SIGNAL
+	    msg.buf[0] = EXA.MSGID.END_OF_SIGNAL; // END_OF_SIGNAL
 
 	    let pid = Module.getpid();
 
@@ -7870,6 +7915,7 @@ var SyscallsLibrary = {
 	//TODO
 	return 0;
     },
+    __syscall_uname__deps: ['$EXA'],
     __syscall_uname__sig: 'ip',
     __syscall_uname: function(buf) {
 
@@ -7879,7 +7925,7 @@ var SyscallsLibrary = {
 
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 48; // UNAME
+	    buf2[0] = EXA.MSGID.UNAME; // UNAME
 
 	    let pid = Module.getpid();
 
@@ -7894,7 +7940,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (48|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.UNAME|0x80)) {
 
 		    if (buf) {
 
@@ -8017,6 +8063,7 @@ var SyscallsLibrary = {
 	//TODO
 	return 0;
     },
+    __syscall_fsync__deps: ['$EXA'],
     __syscall_fsync__sig: 'ii',
     __syscall_fsync: function(fd) {
 
@@ -8028,7 +8075,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 49; // FSYNC
+		buf2[0] = EXA.MSGID.FSYNC; // FSYNC
 
 		let pid = Module.getpid();
 
@@ -8052,7 +8099,7 @@ var SyscallsLibrary = {
 
 		    //console.log("__syscall_readv handler "+msg2.buf[0]);
 
-		    if (msg2.buf[0] == (49|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.FSYNC|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 			
@@ -8087,7 +8134,7 @@ var SyscallsLibrary = {
 
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 26; // IS_OPEN
+		buf2[0] = EXA.MSGID.IS_OPEN; // IS_OPEN
 
 		let pid = Module.getpid();
 
@@ -8107,7 +8154,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 
-		    if (msg2.buf[0] == (26|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.IS_OPEN|0x80)) {
 
 			let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -8167,6 +8214,7 @@ var SyscallsLibrary = {
     
 	return ret;
     },
+    __syscall_setsockopt__deps: ['$EXA'],
     __syscall_setsockopt__sig: 'iiiipii',
     __syscall_setsockopt: function(fd, level, optname, optval, optlen) {
 
@@ -8176,7 +8224,7 @@ var SyscallsLibrary = {
 
 	    let buf2 = new Uint8Array(buf_size);
 
-	    buf2[0] = 59; // SETSOCKOPT
+	    buf2[0] = EXA.MSGID.SETSOCKOPT; // SETSOCKOPT
 
 	    let pid = Module.getpid();
 
@@ -8218,7 +8266,7 @@ var SyscallsLibrary = {
 
 		let msg2 = messageEvent.data;
 
-		if (msg2.buf[0] == (59|0x80)) {
+		if (msg2.buf[0] == (EXA.MSGID.SETSOCKOPT|0x80)) {
 
 		    let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -8292,6 +8340,7 @@ var SyscallsLibrary = {
 	    
 	return 0;
     },
+    __syscall_epoll_wait__deps: ['$EXA'],
     __syscall_epoll_wait__sig: 'iipii',
     __syscall_epoll_wait: function(epoll_fd, ev, cnt, to) {
 
@@ -8305,7 +8354,7 @@ var SyscallsLibrary = {
 	
 		let buf2 = new Uint8Array(buf_size);
 
-		buf2[0] = 31; // SELECT
+		buf2[0] = EXA.MSGID.SELECT; // SELECT
 
 		let pid = Module.getpid();
 
@@ -8476,7 +8525,7 @@ var SyscallsLibrary = {
 
 		    let buf2 = new Uint8Array(buf_size);
 
-		    buf2[0] = 26; // IS_OPEN
+		    buf2[0] = EXA.MSGID.IS_OPEN; // IS_OPEN
 
 		    let pid = Module.getpid();
 
@@ -8496,7 +8545,7 @@ var SyscallsLibrary = {
 
 			let msg2 = messageEvent.data;
 
-			if (msg2.buf[0] == (26|0x80)) {
+			if (msg2.buf[0] == (EXA.MSGID.IS_OPEN|0x80)) {
 
 			    let _errno = msg2.buf[8] | (msg2.buf[9] << 8) | (msg2.buf[10] << 16) |  (msg2.buf[11] << 24);
 
@@ -8558,7 +8607,7 @@ var SyscallsLibrary = {
 
 		    let msg2 = messageEvent.data;
 		    
-		    if (msg2.buf[0] == (31|0x80)) {
+		    if (msg2.buf[0] == (EXA.MSGID.SELECT|0x80)) {
 
 			let fd = msg2.buf[12] | (msg2.buf[13] << 8) | (msg2.buf[14] << 16) |  (msg2.buf[15] << 24);
 
@@ -8571,7 +8620,7 @@ var SyscallsLibrary = {
 
 			return hid;
 		    }
-		    else if (msg2.buf[0] == 62) { // END_OF_SIGNAL Signal received and handled
+		    else if (msg2.buf[0] == EXA.MSGID.END_OF_SIGNAL) { // END_OF_SIGNAL Signal received and handled
 
 			//TODO: check flags
 			

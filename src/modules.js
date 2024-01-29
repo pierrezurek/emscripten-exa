@@ -40,6 +40,7 @@ global.LibraryManager = {
       'library_int53.js',
       'library_ccall.js',
       'library_addfunction.js',
+      'library_exa.js',
       'library_formatString.js',
       'library_getvalue.js',
       'library_math.js',
